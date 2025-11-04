@@ -30,7 +30,7 @@ export const tokens = (mode: PaletteMode) => ({
                 600: "#101624",
                 700: "#0c101b",
                 800: "#080b12",
-                900: "#040509",
+                900: "#181a1b",
             },
             greenAccent: {
                 100: "#dbf5ee",
@@ -62,7 +62,7 @@ export const tokens = (mode: PaletteMode) => ({
                 500: "#6870fa",
                 600: "#535ac8",
                 700: "#3e4396",
-                800: "#2a2d64",
+                800: "#003cb0", // manually changed
                 900: "#151632",
             },
         }
@@ -133,7 +133,6 @@ export const themeSettings = (mode: PaletteMode) => {
             mode: mode,
             ...(mode === "dark"
                 ? {
-                    // palette values for dark mode
                     primary: {
                         main: colors.primary[500],
                     },
@@ -146,7 +145,7 @@ export const themeSettings = (mode: PaletteMode) => {
                         light: colors.grey[100],
                     },
                     background: {
-                        default: colors.primary[500],
+                        default: colors.primary[900],
                     },
                 }
                 : {
@@ -214,7 +213,7 @@ export const useMode = (): [Theme, ColorModeContextType] => {
         []
     );
 
-    // createTheme já retorna o tipo 'Theme'
+    // createTheme returns 'Theme' type
     const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
     return [theme, colorMode];
