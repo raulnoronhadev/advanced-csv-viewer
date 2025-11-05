@@ -19,7 +19,8 @@ export default function Home() {
                     height: '90%',
                     flexDirection: 'column',
                     gap: 3,
-                }}>
+                }}
+            >
                 <Typography variant='h1'
                     sx={{
                         fontSize: '48px', fontWeight: '1000', color: colors.grey[200]
@@ -51,6 +52,7 @@ export default function Home() {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
+                            flexDirection: 'column',
                         }}
                     >
                         <IconButton
@@ -62,10 +64,20 @@ export default function Home() {
                                 borderStyle: 'solid',
                                 borderColor: colors.grey[800],
                                 borderWidth: 2,
+                                mb: 3,
                             }}
                         >
                             <FileUploadIcon sx={{ fontSize: 40 }} />
                         </IconButton>
+                        <BlueButton text={'Click to Select CSV file'} dynamicPadding={10} />
+                        <Typography
+                            sx={{
+                                mt: 2,
+                                color: colors.grey[300],
+                                fontWeight: 700,
+                            }}>
+                            or, drop he file here
+                        </Typography>
                     </Box>
                 </Box>
             </Box>
