@@ -1,7 +1,7 @@
-import { AppBar, Box, Container, SvgIcon, Typography, useTheme } from '@mui/material';
+import { Box, Container, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import { tokens } from "../theme";
-import csv_viewer from '../../public/logo.svg';
+import BlueButton from '../components/BlueButton';
 
 export default function Topbar() {
     const theme = useTheme();
@@ -45,9 +45,7 @@ export default function Topbar() {
                     <Button sx={{ textTransform: 'none', fontSize: 15, color: colors.primary[100], fontWeight: 600 }}>
                         Log In
                     </Button>
-                    <Button sx={{ textTransform: 'none', fontSize: 15, borderRadius: 2, bgcolor: colors.blueAccent[800], color: colors.primary[100], fontWeight: 600 }}>
-                        Sign Up
-                    </Button>
+                    <BlueButton text={'Sign Up'} />
                 </Box>
             </Box>
         </Container >

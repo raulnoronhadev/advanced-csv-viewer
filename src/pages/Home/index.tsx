@@ -1,6 +1,8 @@
-import { Box, Container, Typography, useTheme } from '@mui/material';
+import { Box, Container, Typography, IconButton, useTheme } from '@mui/material';
 import { tokens } from "../../theme";
 import Topbar from '../../layout/Topbar';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import BlueButton from '../../components/BlueButton';
 
 export default function Home() {
     const theme = useTheme();
@@ -27,13 +29,46 @@ export default function Home() {
                 <Typography variant='h4'
                     sx={{
                         color: colors.grey[300],
-                        fontWeight: '600'
+                        fontWeight: '600',
+                        mb: 2
                     }}
                 >
                     Upload and View CSV Files Online 100% Free
                 </Typography>
-
+                <Box
+                    sx={{
+                        bgcolor: colors.grey[700],
+                        height: '21.875rem',
+                        width: '100%',
+                        borderRadius: 4,
+                        borderStyle: 'dashed',
+                        borderColor: colors.grey[800],
+                        borderWidth: 2,
+                    }}>
+                    <Box
+                        sx={{
+                            height: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <IconButton
+                            sx={{
+                                bgcolor: colors.primary[900],
+                                borderRadius: 3,
+                                height: '6rem',
+                                width: '6rem',
+                                borderStyle: 'solid',
+                                borderColor: colors.grey[800],
+                                borderWidth: 2,
+                            }}
+                        >
+                            <FileUploadIcon sx={{ fontSize: 40 }} />
+                        </IconButton>
+                    </Box>
+                </Box>
             </Box>
-        </ Container>
+        </ Container >
     )
 }
