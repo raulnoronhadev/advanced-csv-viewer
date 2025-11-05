@@ -75,7 +75,7 @@ export const tokens = (mode: PaletteMode) => ({
                 500: "#666666",
                 600: "#858585",
                 700: "#a3a3a3",
-                800: "#c2c2c2",
+                800: "#ccc7c2",
                 900: "#e0e0e0",
             },
             primary: {

@@ -42,10 +42,10 @@ export default function Topbar() {
                     <Button sx={{ textTransform: 'none', fontSize: 16, color: colors.grey[200] }}>Download</Button>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 2 }}>
-                    <Button sx={{ textTransform: 'none', fontSize: 16, color: colors.primary[100], fontWeight: 600 }}>
+                    <Button sx={{ textTransform: 'none', fontSize: 15, color: colors.primary[100], fontWeight: 600 }}>
                         Log In
                     </Button>
-                    <Button sx={{ textTransform: 'none', fontSize: 16, bgcolor: colors.blueAccent[600], color: colors.primary[100], fontWeight: 600 }}>
+                    <Button sx={{ textTransform: 'none', fontSize: 15, borderRadius: 2, bgcolor: colors.blueAccent[800], color: colors.primary[100], fontWeight: 600 }}>
                         Sign Up
                     </Button>
                 </Box>
