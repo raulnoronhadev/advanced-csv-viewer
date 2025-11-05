@@ -1,37 +1,56 @@
 import { Box, Container, Typography, IconButton, useTheme } from '@mui/material';
 import { tokens } from "../../theme";
 import Topbar from '../../layout/Topbar';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import BlueButton from '../../components/BlueButton';
 import { AgGridReact } from 'ag-grid-react';
-import { useState } from 'react';
 import { AllCommunityModule, ModuleRegistry, type ColDef } from 'ag-grid-community';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
-
-interface CarData {
-    make: string;
-    model: string;
-    price: number;
-}
-
 export default function View() {
-    const [rowData, setRowData] = useState<CarData[]>([
-        { make: "Tesla", model: "Model Y", price: 64950 },
-        { make: "Ford", model: "F-Series", price: 33850 },
-        { make: "Toyota", model: "Corolla", price: 29600 },
-    ]);
+    ModuleRegistry.registerModules([AllCommunityModule]);
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
-    const [colDefs, setColDefs] = useState<ColDef<CarData>[]>([
-        { field: "make" },
-        { field: "model" },
-        { field: "price" },
-    ]);
+    interface MyRowData {
+        id: number;
+        name: string;
+        age: number;
+    }
+
+    const columnDefs: ColDef<MyRowData>[] = [
+        { field: 'id' },
+        { field: 'name' },
+        { field: 'age' },
+
+    ];
+
+    const rowData: MyRowData[] = [
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+        { id: 1, name: 'Alice', age: 30 },
+        { id: 2, name: 'Bob', age: 24 },
+    ];
 
     return (
-        <Container maxWidth="lg" sx={{
-            height: '100%',
-        }}>
+        <Container maxWidth="lg">
             <Topbar />
             <Box
                 sx={{
@@ -42,10 +61,13 @@ export default function View() {
                     gap: 3,
                 }}
             >
-                <Box sx={{ height: '100%', }}>
-                    <AgGridReact
+                <Box sx={{
+                    height: '85vh',
+                    width: '96%'
+                }}>
+                    <AgGridReact<MyRowData>
                         rowData={rowData}
-                        columnDefs={colDefs}
+                        columnDefs={columnDefs}
                     />
                 </Box>
             </Box>
