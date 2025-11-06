@@ -1,13 +1,14 @@
 import { Box, Typography, Button, useTheme } from '@mui/material';
 import { tokens } from "../../context/ThemeContext";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import { useState, useRef, type ChangeEvent, type FormEvent, Activity } from 'react';
+import { useState, useRef, type ChangeEvent, type FormEvent, Activity, type DragEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCsvData } from '../../context/CsvDataContext';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function FileUploader() {
+    const [isDragging, setIsDragging] = useState(false);
     const [csvFileData, setCsvFileData] = useState<File | null>(null);
     const { uploadCsv } = useCsvData();
     const theme = useTheme();
@@ -37,15 +38,43 @@ export default function FileUploader() {
         fileInputRef.current?.click();
     }
 
+    const handleDragOver = (e: DragEvent<HTMLDivElement>): void => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e: DragEvent<HTMLDivElement>): void => {
+        e.preventDefault();
+        setIsDragging(false);
+    };
+
+    const handleDrop = (e: DragEvent<HTMLDivElement>): void => {
+        e.preventDefault();
+        setIsDragging(false);
+
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            const file = e.dataTransfer.files[0];
+            if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
+                setCsvFileData(file);
+                uploadCsv(file);
+            } else {
+                alert('Please select a valid CSV file.');
+            }
+        }
+    };
+
     return (
         <Box
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
             sx={{
                 bgcolor: colors.grey[700],
                 height: '21.875rem',
                 width: '100%',
                 borderRadius: 4,
                 borderStyle: 'dashed',
-                borderColor: colors.grey[800],
+                borderColor: isDragging ? colors.greenAccent[500] : colors.grey[800],
                 borderWidth: 2,
             }}>
             <Activity mode={!csvFileData ? "visible" : "hidden"}>
