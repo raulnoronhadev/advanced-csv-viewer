@@ -1,17 +1,23 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, useTheme } from '@mui/material';
 import Topbar from '../../layout/Topbar';
 import { AgGridReact } from 'ag-grid-react';
-import { AllCommunityModule, ModuleRegistry, type ColDef } from 'ag-grid-community';
+import { AllCommunityModule, ModuleRegistry, themeQuartz } from 'ag-grid-community';
 import { useCsvData, type CsvRowData } from '../../context/CsvDataContext';
+import { tokens } from "../../context/ThemeContext";
+import { colorSchemeDark } from 'ag-grid-community';
 
 export default function CsvGrid() {
     ModuleRegistry.registerModules([AllCommunityModule]);
     const { data, columnDefs } = useCsvData();
     console.log(data);
-
-    const rowData: CsvRowData[] = [
-
-    ];
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const myTheme = themeQuartz
+        .withPart(colorSchemeDark)
+        .withParams({
+            backgroundColor: colors.grey[700],
+            accentColor: 'dark',
+        });
 
     return (
         <Container maxWidth="lg">
@@ -28,11 +34,13 @@ export default function CsvGrid() {
                 <Box sx={{
                     height: '85vh',
                     width: '96%',
-                    className: "ag-theme-quartz-dark",
+                    bgcolor: colors.grey[800],
                 }}>
                     <AgGridReact<CsvRowData>
+                        theme={myTheme}
                         rowData={data}
                         columnDefs={columnDefs}
+
                     />
                 </Box>
             </Box>

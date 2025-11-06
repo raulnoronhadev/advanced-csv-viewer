@@ -1,10 +1,15 @@
-import { Box, Container, useTheme } from '@mui/material';
+import { Box, Container, IconButton, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import { tokens } from "../context/ThemeContext";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import { ColorModeContext } from "../context/ThemeContext";
+import { useContext } from "react";
 
 export default function Topbar() {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const colorMode = useContext(ColorModeContext);
 
     return (
         <Container
@@ -41,6 +46,15 @@ export default function Topbar() {
                     <Button sx={{ textTransform: 'none', fontSize: 16, color: colors.grey[200] }}>Download</Button>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Box display="flex" alignItems="center" gap="10px">
+                        <IconButton onClick={colorMode.toggleColorMode}>
+                            {theme.palette.mode === "dark" ? (
+                                <DarkModeOutlinedIcon />
+                            ) : (
+                                <LightModeOutlinedIcon />
+                            )}
+                        </IconButton>
+                    </Box>
                     <Button sx={{ textTransform: 'none', fontSize: 15, color: colors.primary[100], fontWeight: 600 }}>
                         Log In
                     </Button>
