@@ -1,7 +1,6 @@
 import { Box, Container, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
-import { tokens } from "../theme";
-import BlueButton from '../components/BlueButton';
+import { tokens } from "../context/ThemeContext";
 
 export default function Topbar() {
     const theme = useTheme();
@@ -45,7 +44,9 @@ export default function Topbar() {
                     <Button sx={{ textTransform: 'none', fontSize: 15, color: colors.primary[100], fontWeight: 600 }}>
                         Log In
                     </Button>
-                    <BlueButton text={'Sign Up'} />
+                    <Button>
+                        Sign Up
+                    </Button>
                 </Box>
             </Box>
         </Container >

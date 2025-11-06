@@ -1,5 +1,5 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { ColorModeContext, useMode } from './theme';
+import { ColorModeContext, useMode } from './context/ThemeContext';
 import { Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import View from './pages/View';

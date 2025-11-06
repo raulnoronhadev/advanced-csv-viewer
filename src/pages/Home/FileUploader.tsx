@@ -1,11 +1,12 @@
 import { Box, Typography, Button, useTheme } from '@mui/material';
-import { tokens } from "../../theme";
+import { tokens } from "../../context/ThemeContext";
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { useState, useRef, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as Papa from 'papaparse';
 
 export default function FileUploader() {
-    const [selectedCsvFile, setSelectedCsvFile] = useState<File | null>(null);
+    const [csvFileData, setCsvFileData] = useState<any[]>([]);
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -13,14 +14,21 @@ export default function FileUploader() {
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
-            setSelectedCsvFile(e.target.files[0]);
+            const file = e.target.files[0];
+            Papa.parse(file, {
+                header: true,
+                complete: (results) => {
+                    setCsvFileData(results.data);
+                    console.log(csvFileData);
+                }
+            })
         }
     }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        if (selectedCsvFile) {
-            console.log('Selected CSV file: ', selectedCsvFile);
+        if (csvFileData) {
+            console.log('Selected CSV file: ', csvFileData);
             navigate('/view');
         } else {
             alert('Please click in Upload Icon and select a CSV file');

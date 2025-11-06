@@ -1,5 +1,5 @@
 import { Box, Container, Typography, useTheme } from '@mui/material';
-import { tokens } from "../../theme";
+import { tokens } from "../../context/ThemeContext";
 import Topbar from '../../layout/Topbar';
 import FileUploader from './FileUploader';
 
