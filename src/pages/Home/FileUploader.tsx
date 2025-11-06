@@ -4,9 +4,11 @@ import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { useState, useRef, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Papa from 'papaparse';
+import { useCsvData } from '../../context/CsvDataContext';
 
 export default function FileUploader() {
     const [csvFileData, setCsvFileData] = useState<any[]>([]);
+    const { uploadCsv } = useCsvData();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -15,13 +17,7 @@ export default function FileUploader() {
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            Papa.parse(file, {
-                header: true,
-                complete: (results) => {
-                    setCsvFileData(results.data);
-                    console.log(csvFileData);
-                }
-            })
+            uploadCsv(file);
         }
     }
 
