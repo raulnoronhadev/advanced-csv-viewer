@@ -44,7 +44,7 @@ export default function Topbar() {
                     <Button sx={{ textTransform: 'none', fontSize: 15, color: colors.primary[100], fontWeight: 600 }}>
                         Log In
                     </Button>
-                    <Button>
+                    <Button sx={{ textTransform: 'none', bgcolor: colors.blueAccent[800], fontSize: 15, color: colors.primary[100], fontWeight: 600 }} >
                         Sign Up
                     </Button>
                 </Box>

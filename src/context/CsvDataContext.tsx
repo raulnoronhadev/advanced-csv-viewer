@@ -1,29 +1,44 @@
 import { createContext, useContext, useState, type ReactNode, type ChangeEvent } from "react";
 import * as Papa from 'papaparse';
+import { type ColDef } from 'ag-grid-community';
 
 
-interface CsvData {
-    id: string;
-    name: string;
+export interface CsvRowData {
+    [key: string]: any;
 }
 
 export interface CsvDataContextType {
-    data: CsvData[];
+    data: CsvRowData[];
+    columnDefs: ColDef<CsvRowData>[];
     uploadCsv: (file: File) => void;
 }
 
 const CsvDataContext = createContext<CsvDataContextType | undefined>(undefined);
 
 export const CsvDataProvider = ({ children }: { children: ReactNode }) => {
-    const [data, setData] = useState<CsvData[]>([]);
+    const [columnDefs, setColumnDefs] = useState<ColDef<CsvRowData>[]>([]);
+    const [data, setData] = useState<CsvRowData[]>([]);
 
     const uploadCsv = (file: File) => {
         Papa.parse(file, {
             header: true,
             dynamicTyping: true,
+            skipEmptyLines: true,
             complete: (results) => {
-                setData(results.data as CsvData[]);
-                console.log(results.data);
+                const parsedData = results.data as CsvRowData[];
+                if (parsedData.length > 0) {
+                    const headers = Object.keys(parsedData[0]);
+                    const dynamicColDefs: ColDef<CsvRowData>[] = headers.map(header => ({
+                        field: header,
+                        headerName: header.charAt(0).toUpperCase() + header.slice(1),
+                        filter: true,
+                    }));
+                    setColumnDefs(dynamicColDefs);
+                } else {
+                    setColumnDefs([]);
+                }
+                setData(parsedData);
+                console.log("CSV data:", parsedData)
             },
             error: (error) => {
                 console.error("Error parsing CSV: " + { error })
@@ -32,7 +47,7 @@ export const CsvDataProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <CsvDataContext.Provider value={{ data, uploadCsv }}>
+        <CsvDataContext.Provider value={{ data, columnDefs, uploadCsv }}>
             {children}
         </CsvDataContext.Provider>
     )

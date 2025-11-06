@@ -1,52 +1,16 @@
-import { Box, Container, useTheme } from '@mui/material';
-import { tokens } from "../../context/ThemeContext";
+import { Box, Container } from '@mui/material';
 import Topbar from '../../layout/Topbar';
 import { AgGridReact } from 'ag-grid-react';
 import { AllCommunityModule, ModuleRegistry, type ColDef } from 'ag-grid-community';
+import { useCsvData, type CsvRowData } from '../../context/CsvDataContext';
 
 export default function CsvGrid() {
     ModuleRegistry.registerModules([AllCommunityModule]);
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+    const { data, columnDefs } = useCsvData();
+    console.log(data);
 
-    interface MyRowData {
-        id: number;
-        name: string;
-        age: number;
-    }
+    const rowData: CsvRowData[] = [
 
-    const columnDefs: ColDef<MyRowData>[] = [
-        { field: 'id' },
-        { field: 'name' },
-        { field: 'age' },
-
-    ];
-
-    const rowData: MyRowData[] = [
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
-        { id: 1, name: 'Alice', age: 30 },
-        { id: 2, name: 'Bob', age: 24 },
     ];
 
     return (
@@ -63,10 +27,11 @@ export default function CsvGrid() {
             >
                 <Box sx={{
                     height: '85vh',
-                    width: '96%'
+                    width: '96%',
+                    className: "ag-theme-quartz-dark",
                 }}>
-                    <AgGridReact<MyRowData>
-                        rowData={rowData}
+                    <AgGridReact<CsvRowData>
+                        rowData={data}
                         columnDefs={columnDefs}
                     />
                 </Box>
