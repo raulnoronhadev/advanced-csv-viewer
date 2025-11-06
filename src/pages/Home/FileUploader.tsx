@@ -1,0 +1,107 @@
+import { Box, Typography, Button, useTheme } from '@mui/material';
+import { tokens } from "../../theme";
+import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import { useState, useRef, type ChangeEvent, type FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+export default function FileUploader() {
+    const [selectedCsvFile, setSelectedCsvFile] = useState<File | null>(null);
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const navigate = useNavigate();
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setSelectedCsvFile(e.target.files[0]);
+        }
+    }
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if (selectedCsvFile) {
+            console.log('Selected CSV file: ', selectedCsvFile);
+            navigate('/view');
+        } else {
+            alert('Please click in Upload Icon and select a CSV file');
+        }
+    }
+
+    const handleIconClick = () => {
+        fileInputRef.current?.click();
+    }
+
+    return (
+        <Box
+            sx={{
+                bgcolor: colors.grey[700],
+                height: '21.875rem',
+                width: '100%',
+                borderRadius: 4,
+                borderStyle: 'dashed',
+                borderColor: colors.grey[800],
+                borderWidth: 2,
+            }}>
+            <Box
+                sx={{
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                }}
+            >
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <input
+                        type="file"
+                        accept=".csv"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                    />
+                    <Button
+                        onClick={handleIconClick}
+                        sx={{
+                            bgcolor: colors.primary[900],
+                            borderRadius: 3,
+                            height: '6rem',
+                            width: '6rem',
+                            borderStyle: 'solid',
+                            borderColor: colors.grey[800],
+                            borderWidth: 2,
+                            mb: 3,
+                            '&:hover': {
+                                bgcolor: colors.grey[600],
+                            }
+                        }}
+                    >
+                        <FileUploadOutlinedIcon sx={{ fontSize: 40, color: colors.primary[100] }} />
+                    </Button>
+                    <Button
+                        type={"submit"}
+                        sx={{
+                            p: 1.5,
+                            paddingLeft: 3,
+                            paddingRight: 3,
+                            textTransform: 'none',
+                            fontSize: 15,
+                            borderRadius: 1.5,
+                            bgcolor: colors.blueAccent[800],
+                            color: colors.primary[100],
+                            fontWeight: 600,
+                        }}>
+                        Select CSV file
+                    </Button>
+                </form>
+                <Typography
+                    sx={{
+                        mt: 2,
+                        color: colors.grey[300],
+                        fontWeight: 700,
+                    }}>
+                    or, drop he file here
+                </Typography>
+            </Box>
+        </Box>
+    )
+}
