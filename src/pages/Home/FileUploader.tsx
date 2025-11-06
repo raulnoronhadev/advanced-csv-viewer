@@ -126,7 +126,7 @@ export default function FileUploader() {
                                 color: colors.primary[100],
                                 fontWeight: 600,
                             }}>
-                            Upload file
+                            Click here to search for the file.
                         </Button>
                     </form>
                     <Typography

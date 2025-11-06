@@ -38,7 +38,6 @@ export const CsvDataProvider = ({ children }: { children: ReactNode }) => {
                     setColumnDefs([]);
                 }
                 setData(parsedData);
-                console.log("CSV data:", parsedData)
             },
             error: (error) => {
                 console.error("Error parsing CSV: " + { error })

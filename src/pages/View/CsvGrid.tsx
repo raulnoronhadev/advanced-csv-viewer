@@ -9,7 +9,6 @@ import { colorSchemeDark } from 'ag-grid-community';
 export default function CsvGrid() {
     ModuleRegistry.registerModules([AllCommunityModule]);
     const { data, columnDefs } = useCsvData();
-    console.log(data);
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const myTheme = themeQuartz
